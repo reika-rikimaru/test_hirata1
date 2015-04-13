@@ -10,18 +10,17 @@
 
 @implementation ViewController {
     UIPickerView *picker;
-    NSArray *ar1;
-    NSArray *ar2;
-    NSArray *ar3;
-    int num;
-    int num1;
+    NSArray *_subjectArray;
+    NSArray *_categoryArray;
+    NSArray *_academyArray;
+    int subject;
+    int category;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-     num = 1;
-     num1 = 1;
+     subject = 1;
+     category = 1;
     
     // UIPickerのインスタンス化
     picker = [[UIPickerView alloc]init];
@@ -39,17 +38,16 @@
     [self.view addSubview:picker];
     
     //ピッカーに文字列を格納する
-    ar1 = [NSArray arrayWithObjects:@"国語", @"算数", @"理科", @"社会", @"英語", nil];
-    ar2 = [NSArray arrayWithObjects:@"標準", @"予習", @"模試", @"復習", @"再復習", nil];
-    ar3 = [NSArray arrayWithObjects:@"中学一年", @"中学二年", @"中学三年", nil];
+    _subjectArray = [NSArray arrayWithObjects:@"国語", @"算数", @"理科", @"社会", @"英語", nil];
+    _categoryArray = [NSArray arrayWithObjects:@"標準", @"予習", @"模試", @"復習", @"再復習", nil];
+    _academyArray = [NSArray arrayWithObjects:@"中学一年", @"中学二年", @"中学三年", nil];
     
 }
-
+#pragma mark - UIPickerView Datesorce Methods
 /**
  * ピッカーに表示する列数を返す
  */
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 3;
 }
 
@@ -58,14 +56,13 @@
  * ピッカーに表示する行数を返す
  */
 - (NSInteger)pickerView:(UIPickerView *)pickerView
-numberOfRowsInComponent:(NSInteger)component
-{
+numberOfRowsInComponent:(NSInteger)component {
     switch (component) {
         case 0: // 1列目
             return 3.0;
             break;
         case 1: // 2列目
-            switch (num) {
+            switch (subject) {
                 case 1: //1列目
                     return 2.0;
                     break;
@@ -81,7 +78,7 @@ numberOfRowsInComponent:(NSInteger)component
             }
             
         case 2: // 3列目
-            switch (num1) {
+            switch (category) {
                 case 1:
                     return 2.0;
                     break;
@@ -101,12 +98,12 @@ numberOfRowsInComponent:(NSInteger)component
     }
 }
 
+#pragma mark - UIPickerView Delegate Methods
 /**
  * 行のサイズを変更
  */
 - (CGFloat)pickerView:(UIPickerView *)pickerView
-    widthForComponent:(NSInteger)component
-{
+    widthForComponent:(NSInteger)component {
     switch (component) {
         case 0: // 1列目
             return 125.0;
@@ -133,19 +130,18 @@ numberOfRowsInComponent:(NSInteger)component
  * ピッカーに表示する値を返す
  */
 - (NSString *)pickerView:(UIPickerView *)pickerView
-             titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    switch (component){
+             titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    switch (component) {
         case 0: // 1列目
-            return [ar3 objectAtIndex: row];
+            return [_academyArray objectAtIndex: row];
             break;
             
         case 1: // 2列目
-            return [ar1 objectAtIndex: row];
+            return [_subjectArray  objectAtIndex: row];
             break;
             
         case 2: // 3列目
-            return [ar2 objectAtIndex: row];
+            return [_categoryArray objectAtIndex: row];
             break;
             
         default:
@@ -159,14 +155,13 @@ numberOfRowsInComponent:(NSInteger)component
  * ピッカーの選択行が決まったとき
  */
 - (void)pickerView:(UIPickerView *)pickerView
-      didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
+      didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     // 1列目の選択された行数を取得
     NSInteger val0 = [pickerView selectedRowInComponent:0];
-    num = val0 + 1;
-    num1 = val0 + 1;
+    subject = val0 + 1;
+    category = val0 + 1;
     
-    NSLog(@"num:%d%d", num,num1);
+    NSLog(@"subject:%d%d", subject,category);
     [picker reloadComponent:1];
     [picker reloadComponent:2];
     
