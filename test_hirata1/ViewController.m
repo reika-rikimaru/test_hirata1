@@ -10,9 +10,9 @@
 
 @implementation ViewController {
     UIPickerView *picker;
-    NSArray *ar1;
-    NSArray *ar2;
-    NSArray *ar3;
+    NSArray *_ar1;
+    NSArray *_ar2;
+    NSArray *_ar3;
     int num;
     int num1;
 }
@@ -39,9 +39,9 @@
     [self.view addSubview:picker];
     
     //ピッカーに文字列を格納する
-    ar1 = [NSArray arrayWithObjects:@"国語", @"算数", @"理科", @"社会", @"英語", nil];
-    ar2 = [NSArray arrayWithObjects:@"標準", @"予習", @"模試", @"復習", @"再復習", nil];
-    ar3 = [NSArray arrayWithObjects:@"中学一年", @"中学二年", @"中学三年", nil];
+    _ar1 = [NSArray arrayWithObjects:@"国語", @"算数", @"理科", @"社会", @"英語", nil];
+    _ar2 = [NSArray arrayWithObjects:@"標準", @"予習", @"模試", @"復習", @"再復習", nil];
+    _ar3 = [NSArray arrayWithObjects:@"中学一年", @"中学二年", @"中学三年", nil];
     
 }
 
@@ -137,15 +137,15 @@ numberOfRowsInComponent:(NSInteger)component
 {
     switch (component){
         case 0: // 1列目
-            return [ar3 objectAtIndex: row];
+            return [_ar3 objectAtIndex: row];
             break;
             
         case 1: // 2列目
-            return [ar1 objectAtIndex: row];
+            return [_ar1 objectAtIndex: row];
             break;
             
         case 2: // 3列目
-            return [ar2 objectAtIndex: row];
+            return [_ar2 objectAtIndex: row];
             break;
             
         default:
@@ -169,8 +169,6 @@ numberOfRowsInComponent:(NSInteger)component
     NSLog(@"num:%d%d", num,num1);
     [picker reloadComponent:1];
     [picker reloadComponent:2];
-    
-   
 }
 
 
