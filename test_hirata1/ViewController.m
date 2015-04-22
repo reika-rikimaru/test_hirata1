@@ -8,19 +8,40 @@
 
 #import "ViewController.h"
 
+typedef NS_ENUM(NSInteger, EnumColumn) {
+    EnumColumnAcademy,                  // 学年
+    EnumColumnSubject,                  // 教科
+    EnumColumnCategory                  // カテゴリ
+};
+
+typedef NS_ENUM(NSInteger, EnumAcademy) {
+    EnumAcademy1st,                     // 1年
+    EnumAcademy2nd,                     // 2年
+    EnumAcademy3rd                      // 3年
+};
+
+typedef NS_ENUM(NSInteger, EnumSubject) {
+    EnumSubjectNationalLanguage,        // 国語
+    EnumSubjectMath,                    // 算数
+    EnumSubjectScience,                 // 理科
+    EnumSubjectSociety,                 // 社会
+    EnumSubjectEnglish                  // 英語
+};
+
+
 @implementation ViewController {
     UIPickerView *picker;
     NSArray *_subjectArray;
     NSArray *_categoryArray;
     NSArray *_academyArray;
-    int subject;
-    int category;
+    EnumAcademy academy;
+    EnumSubject subject;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     subject = 1;
-     category = 1;
+    academy = EnumAcademy1st;
+    subject = EnumSubjectNationalLanguage;
     
     // UIPickerのインスタンス化
     picker = [[UIPickerView alloc]init];
@@ -38,10 +59,12 @@
     [self.view addSubview:picker];
     
     //ピッカーに文字列を格納する
+    _academyArray = [NSArray arrayWithObjects:@"中学一年", @"中学二年", @"中学三年", nil];
     _subjectArray = [NSArray arrayWithObjects:@"国語", @"算数", @"理科", @"社会", @"英語", nil];
     _categoryArray = [NSArray arrayWithObjects:@"標準", @"予習", @"模試", @"復習", @"再復習", nil];
-    _academyArray = [NSArray arrayWithObjects:@"中学一年", @"中学二年", @"中学三年", nil];
 }
+
+
 #pragma mark - UIPickerView Datesorce Methods
 /**
  * ピッカーに表示する列数を返す
@@ -56,36 +79,44 @@
  */
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component {
-    switch (component) {
-        case 0: // 1列目
-            return 3.0;
+    
+    EnumColumn col = component;
+    
+    switch (col) {
+        case EnumColumnAcademy: // 学年の列
+            return 3;
             break;
-        case 1: // 2列目
-            switch (subject) {
-                case 1: //1列目
-                    return 2.0;
+        case EnumColumnSubject: // 教科の列
+            switch (academy) {
+                case EnumAcademy1st: //1年
+                    return 2;
                     break;
-                case 2:  //1列目
-                    return 4.0;
+                case EnumAcademy2nd: //2年
+                    return 4;
                     break;
-                case 3: //1列目
-                    return 5.0;
+                case EnumAcademy3rd: //3年
+                    return 5;
                     break;
-                    
                 default:
                     break;
             }
             
-        case 2: // 3列目
-            switch (category) {
-                case 1:
-                    return 2.0;
+        case EnumColumnCategory: // カテゴリの列
+            switch (subject) {
+                case EnumSubjectNationalLanguage:
+                    return 2;
                     break;
-                case 2:
-                    return 3.0;
+                case EnumSubjectMath:
+                    return 3;
                     break;
-                case 3:
-                    return 5.0;
+                case EnumSubjectScience:
+                    return 5;
+                    break;
+                case EnumSubjectSociety:
+                    return 4;
+                    break;
+                case EnumSubjectEnglish:
+                    return 1;
                     break;
                 default:
                     break;
@@ -103,16 +134,19 @@ numberOfRowsInComponent:(NSInteger)component {
  */
 - (CGFloat)pickerView:(UIPickerView *)pickerView
     widthForComponent:(NSInteger)component {
-    switch (component) {
-        case 0: // 1列目
+    
+    EnumColumn col = component;
+    
+    switch (col) {
+        case EnumColumnAcademy: // 学年の列
             return 125.0;
             break;
             
-        case 1: // 2列目
+        case EnumColumnSubject: // 教科の列
             return 85.0;
             break;
             
-        case 2: // 3列目
+        case EnumColumnCategory: // カテゴリの列
             return 85.0;
             break;
             
@@ -130,16 +164,19 @@ numberOfRowsInComponent:(NSInteger)component {
  */
 - (NSString *)pickerView:(UIPickerView *)pickerView
              titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    switch (component) {
-        case 0: // 1列目
+
+    EnumColumn col = component;
+    
+    switch (col) {
+        case EnumColumnAcademy: // 学年の列
             return [_academyArray objectAtIndex: row];
             break;
             
-        case 1: // 2列目
+        case EnumColumnSubject: // 教科の列
             return [_subjectArray  objectAtIndex: row];
             break;
             
-        case 2: // 3列目
+        case EnumColumnCategory: // カテゴリの列
             return [_categoryArray objectAtIndex: row];
             break;
             
@@ -155,14 +192,15 @@ numberOfRowsInComponent:(NSInteger)component {
  */
 - (void)pickerView:(UIPickerView *)pickerView
       didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+
     // 1列目の選択された行数を取得
-    NSInteger val0 = [pickerView selectedRowInComponent:0];
-    subject = val0 + 1;
-    category = val0 + 1;
+    academy = [pickerView selectedRowInComponent:EnumColumnAcademy];
+    subject = [pickerView selectedRowInComponent:EnumColumnSubject];
+    NSInteger category = [pickerView selectedRowInComponent:EnumColumnCategory];
     
-    NSLog(@"subject:%d%d", subject,category);
-    [picker reloadComponent:1];
-    [picker reloadComponent:2];
+        NSLog(@"selected: %ld %ld %ld", academy, subject, category);
+    [picker reloadComponent:EnumColumnSubject];
+    [picker reloadComponent:EnumColumnCategory];
 }
 
 
