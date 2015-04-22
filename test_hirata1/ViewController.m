@@ -89,13 +89,13 @@ numberOfRowsInComponent:(NSInteger)component {
         case EnumColumnSubject: // 教科の列
             switch (academy) {
                 case EnumAcademy1st: //1年
-                    return 2.0;
+                    return 2;
                     break;
                 case EnumAcademy2nd: //2年
-                    return 4.0;
+                    return 4;
                     break;
                 case EnumAcademy3rd: //3年
-                    return 5.0;
+                    return 5;
                     break;
                 default:
                     break;
@@ -104,19 +104,19 @@ numberOfRowsInComponent:(NSInteger)component {
         case EnumColumnCategory: // カテゴリの列
             switch (subject) {
                 case EnumSubjectNationalLanguage:
-                    return 2.0;
+                    return 2;
                     break;
                 case EnumSubjectMath:
-                    return 3.0;
+                    return 3;
                     break;
                 case EnumSubjectScience:
-                    return 5.0;
+                    return 5;
                     break;
                 case EnumSubjectSociety:
-                    return 4.0;
+                    return 4;
                     break;
                 case EnumSubjectEnglish:
-                    return 1.0;
+                    return 1;
                     break;
                 default:
                     break;
