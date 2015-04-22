@@ -13,8 +13,8 @@
     NSArray *_subjectArray;
     NSArray *_categoryArray;
     NSArray *_academyArray;
-    int subject;
-    int category;
+    NSInteger subject;
+    NSInteger category;
 }
 
 - (void)viewDidLoad {
@@ -160,7 +160,7 @@ numberOfRowsInComponent:(NSInteger)component {
     subject = val0 + 1;
     category = val0 + 1;
     
-    NSLog(@"subject:%d%d", subject,category);
+    NSLog(@"subject:%ld%ld", subject,category);
     [picker reloadComponent:1];
     [picker reloadComponent:2];
 }
